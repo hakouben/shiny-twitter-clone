@@ -1,0 +1,19 @@
+{
+  "name": "twitter-clone",
+  "version": "1.0.0",
+  "description": "my twitter-clone for practice next js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hakouben/twitter-clone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hakouben/twitter-clone/issues"
+  },
+  "homepage": "https://github.com/hakouben/twitter-clone#readme"
+}
