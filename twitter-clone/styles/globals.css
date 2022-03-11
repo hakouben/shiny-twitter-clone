@@ -13,4 +13,7 @@
         @apply hover:bg-[#bedcff] hover:bg-opacity-10 rounded-full cursor-pointer w-[52px] xl:w-auto xl:h-auto xl:py-3 xl:px-4 transition duration-200 ease-out
         
     }
+    .icon{
+        @apply cursor-pointer w-11 h-11 hover:bg-[#1d9bf0] hover:bg-opacity-10 flex items-center justify-center rounded-full transition ease-in
+    }
 }

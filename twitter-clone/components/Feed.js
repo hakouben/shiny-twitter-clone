@@ -8,7 +8,7 @@ function Feed() {
       Acceuil
     </h2>
     <div className="hoverAnimation w-9 h-9 flex items-center justify-center xl:px-0 ml-auto">
-      <SparklesIcon/>
+      <SparklesIcon className=" h-5 text-white"/>
     </div>
     </div>
     <Input/>
