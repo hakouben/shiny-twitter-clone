@@ -4,10 +4,14 @@ import React, { useRef, useState } from "react";
 /*importation des emoji de github apres avoir installer le pack avec npm add emoji-mart*/
 import { Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
+
+
+
 function Input() {
     const[input,setInput]=useState("");
     const[selectedFile,setSelectedFile] = useState(null);
     const filePickerRef = useRef(null);
+    const[loading, setLoading]=useState(false);
     const [showEmojis, setShowEmojis] = useState(false);
 
     const addImageToPost = () => {};
@@ -19,11 +23,20 @@ function Input() {
       let emoji = String.fromCodePoint(...codesArray);
       setInput(input + emoji);
     };
+
+    const sendPost =() => {
+          if (loading) return;
+          setLoading(true);
+          
+    
+        }
+
+
     return <div className={`border-b border-gray-700 p-4 flex space-x-3`}>
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsk7CNY1CFN_p0sfY6zR8KeobcLgl9Zs1xxw&usqp=CAU"className="h-11 w-11 rounded-full cursor-pointer"/>
       <div className="w-full divide-y divide-gray-700">
            
-            <div className={``}>
+            <div className={`${selectedFile && "pb-7"} ${input && "space-y-2.5"}`}>
                 <textarea value={input}
                  rows="2" 
                  className=" bg-transparent outline-none text-[#d9d9d9] text-lg placeholder-gray-500 tracking-wide w-full min-h-[50px]" 
@@ -71,7 +84,13 @@ function Input() {
               />
               )}
             </div>
-
+                <button 
+                className="bg-[#1d9bf0] text-white rounded-full px-4 py-1.5 font-bold shadow-md hover:bg-[#1a8cd8] disabled:hover:bg-[#1d9bf0] disabled:opacity-50 disabled:cursor-default"
+                disabled = {!input.trim() && !setSelectedFile}
+                //onClick={sendPost}
+              >
+                Shine
+                </button>
             </div>
       </div>
   </div>
