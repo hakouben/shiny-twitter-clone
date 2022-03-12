@@ -8,18 +8,18 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyC4pIj2SoTs50IFeBVoekN_nvZmCttVXOI",
-    authDomain: "shiny-project-2d28b.firebaseapp.com",
-    projectId: "shiny-project-2d28b",
-    storageBucket: "shiny-project-2d28b.appspot.com",
-    messagingSenderId: "1089265971267",
-    appId: "1:1089265971267:web:169e4a67e14e50861aa4f6"
-  };
+  apiKey: "AIzaSyC4pIj2SoTs50IFeBVoekN_nvZmCttVXOI",
+  authDomain: "shiny-project-2d28b.firebaseapp.com",
+  projectId: "shiny-project-2d28b",
+  storageBucket: "shiny-project-2d28b.appspot.com",
+  messagingSenderId: "1089265971267",
+  appId: "1:1089265971267:web:169e4a67e14e50861aa4f6"
+};
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const db = getFirestore();
-const storage = getStorage();
+const Db = getFirestore();
+const Storage = getStorage();
 
 export default app;
-export { db, storage };
+export { Db, Storage };

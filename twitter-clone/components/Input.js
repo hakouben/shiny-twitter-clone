@@ -4,7 +4,16 @@ import React, { useRef, useState } from "react";
 /*importation des emoji de github apres avoir installer le pack avec npm add emoji-mart*/
 import { Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
-
+import {storage,db} from '../components/firebase';
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "@firebase/firestore";
+import { getDownloadURL, ref, uploadString } from "@firebase/storage";
+//import { signOut, useSession } from "next-auth/react";
 
 
 function Input() {
@@ -14,7 +23,16 @@ function Input() {
     const[loading, setLoading]=useState(false);
     const [showEmojis, setShowEmojis] = useState(false);
 
-    const addImageToPost = () => {};
+    const addImageToPost = (e) => {
+      const reader = new FileReader();
+      if (e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+      }
+  
+      reader.onload = (readerEvent) => {
+        setSelectedFile(readerEvent.target.result);
+      };
+    };
 
     const addEmoji = (e) => {
       let sym = e.unified.split("-");
@@ -24,12 +42,32 @@ function Input() {
       setInput(input + emoji);
     };
 
-    const sendPost =() => {
+    const sendPost = async () => {
           if (loading) return;
           setLoading(true);
           
-    
-        }
+          const decRef = await addDoc(collection( db,'posts',{
+           /* id: session.user.uid,
+      username: session.user.name,
+      userImg: session.user.image,
+      tag: session.user.tag,*/
+      text: input,
+      timestamp: serverTimestamp(),
+          }))
+          const imageRef = ref( storage, `posts/${docRef.id}/image`);
+          if (selectedFile) {
+            await uploadString(imageRef, selectedFile, "data_url").then(async () => {
+              const downloadURL = await getDownloadURL(imageRef);
+              await updateDoc(doc(db, "posts", docRef.id), {
+                image: downloadURL,
+              });
+            });
+          }
+          setLoading(false);
+  setInput("");
+  setSelectedFile(null);
+  setShowEmojis(false);
+        };
 
 
     return <div className={`border-b border-gray-700 p-4 flex space-x-3`}>
