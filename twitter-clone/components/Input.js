@@ -23,6 +23,10 @@ function Input() {
     const[loading, setLoading]=useState(false);
     const [showEmojis, setShowEmojis] = useState(false);
 
+
+
+
+
     const addImageToPost = (e) => {
       const reader = new FileReader();
       if (e.target.files[0]) {
@@ -34,6 +38,10 @@ function Input() {
       };
     };
 
+
+
+
+
     const addEmoji = (e) => {
       let sym = e.unified.split("-");
       let codesArray = [];
@@ -42,19 +50,28 @@ function Input() {
       setInput(input + emoji);
     };
 
-    const sendPost = async () => {
+
+
+
+
+       const sendPost = async () => {
           if (loading) return;
           setLoading(true);
           
-          const decRef = await addDoc(collection( db,'posts',{
-           /* id: session.user.uid,
-      username: session.user.name,
-      userImg: session.user.image,
-      tag: session.user.tag,*/
-      text: input,
-      timestamp: serverTimestamp(),
-          }))
-          const imageRef = ref( storage, `posts/${docRef.id}/image`);
+          const docRef = await addDoc(collection(db,"posts"),{
+                /* id: session.user.uid,
+            username: session.user.name,
+            userImg: session.user.image,
+            tag: session.user.tag,*/
+            text: input,
+            timestamp: serverTimestamp(),
+          })
+
+
+
+
+
+          const imageRef = ref( storage,`posts/${docRef.id}/image`);
           if (selectedFile) {
             await uploadString(imageRef, selectedFile, "data_url").then(async () => {
               const downloadURL = await getDownloadURL(imageRef);
@@ -63,14 +80,16 @@ function Input() {
               });
             });
           }
+
+
           setLoading(false);
-  setInput("");
-  setSelectedFile(null);
-  setShowEmojis(false);
+          setInput("");
+          setSelectedFile(null);
+          setShowEmojis(false);
         };
 
 
-    return <div className={`border-b border-gray-700 p-4 flex space-x-3`}>
+    return <div className={`border-b border-gray-700 p-4 flex space-x-3 ${loading &&"opacity-60"}`}>
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsk7CNY1CFN_p0sfY6zR8KeobcLgl9Zs1xxw&usqp=CAU"className="h-11 w-11 rounded-full cursor-pointer"/>
       <div className="w-full divide-y divide-gray-700">
            
@@ -90,11 +109,13 @@ function Input() {
                         </div>
                 )} 
             </div>
+           {!loading && (
             <div className="flex items-center justify-between pt-2.5 ">
             <div className="flex items-center" >
               <div  className=" icon" onClick={()=> filePickerRef.current.click()}>
                     <PhotographIcon className="h-[22px] text-[#1d9bf0]"/>
-                    <input type="file" onChange={addImageToPost} ref={filePickerRef} hidden/>
+                    <input type="file" onChange={addImageToPost} hidden
+                     ref={filePickerRef} />
               </div>
               
               <div className="icon rotate-90">
@@ -124,12 +145,13 @@ function Input() {
             </div>
                 <button 
                 className="bg-[#1d9bf0] text-white rounded-full px-4 py-1.5 font-bold shadow-md hover:bg-[#1a8cd8] disabled:hover:bg-[#1d9bf0] disabled:opacity-50 disabled:cursor-default"
-                disabled = {!input.trim() && !setSelectedFile}
-                //onClick={sendPost}
+                disabled = {!input && !selectedFile}
+               onClick={sendPost}
               >
                 Shine
                 </button>
             </div>
+            )}
       </div>
   </div>
 }
