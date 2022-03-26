@@ -21,7 +21,7 @@ export default function Home(){
     </div>
   )
 } 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
    const trendingResults = await fetch("https://jsonkeeper.com/b/NKEV").then(
      (res) => res.json()
    );
